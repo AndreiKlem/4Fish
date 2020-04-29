@@ -4,6 +4,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
     defaultConfig {
         applicationId "com.example.a4fish"
         minSdkVersion 26
@@ -23,6 +28,7 @@ android {
 
 }
 
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -34,7 +40,25 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
 
     def room_version = "2.2.5"
+    def lifecycle_version = "2.2.0"
+    def ui_version = "0.1.0-dev09"
+    def work_version = "2.3.4"
 
+    // Room components
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    androidTestImplementation "androidx.room:room-testing:$room_version"
+
+    // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-service:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    // UI
+    implementation "androidx.ui:ui-tooling:$ui_version"
+    implementation "androidx.ui:ui-layout:$ui_version"
+    implementation "androidx.ui:ui-material:$ui_version"
+
+    // Testing
+    implementation "androidx.work:work-runtime:$work_version"
 }
