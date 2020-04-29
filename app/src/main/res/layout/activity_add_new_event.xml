@@ -8,7 +8,7 @@
     tools:context=".AddNewEventActivity">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/title_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autoText="true"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/description_edit_text"
         android:layout_width="0dp"
         android:layout_height="300dp"
         android:autoText="true"
@@ -30,16 +30,16 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/title_edit_text" />
 
     <Button
-        android:id="@+id/button_create"
+        android:id="@+id/create_event_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="create event"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/description_edit_text" />
 
     <Button
         android:id="@+id/button"
