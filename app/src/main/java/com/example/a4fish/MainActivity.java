@@ -18,8 +18,9 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView eventsRecycleView;
     RecyclerView.Adapter eventsAdapter;
-    ArrayList<String> events;
+    ArrayList<Events> events;
     FloatingActionButton addNewEvent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
         eventsRecycleView.setLayoutManager(new LinearLayoutManager(this));
 
         events = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            events.add("New event # " + i);
+        for (int i = 0; i < 100; i++) {
+            Events event = new Events ("Do a workout # " + i, "Squats, push-ups, jogging");
+            events.add(event);
         }
         eventsAdapter = new EventsAdapter(events);
         eventsRecycleView.setAdapter(eventsAdapter);

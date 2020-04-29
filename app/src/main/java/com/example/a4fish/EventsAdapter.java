@@ -11,8 +11,9 @@ import java.util.ArrayList;
 
 class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
-    ArrayList<String> events;
-    public EventsAdapter (ArrayList<String> events) {
+    ArrayList<Events> events;
+
+    public EventsAdapter(ArrayList<Events> events) {
         this.events = events;
     }
 
@@ -24,15 +25,17 @@ class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(EventsAdapter.ViewHolder holder, int position) {
-        holder.eventTextView.setText(events.get(position));
+        holder.eventTextView.setText(events.get(position).getEventTitle());
     }
 
     @Override
     public int getItemCount() {
-        return events.size();    }
+        return events.size();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView eventTextView;
+
         public ViewHolder(View itemView) {
             super(itemView);
             eventTextView = itemView.findViewById(R.id.event_text_view);
