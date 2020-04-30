@@ -9,22 +9,31 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class AddNewEventActivity extends AppCompatActivity {
 
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
     EditText titleEditText;
-    EditText descriptionEditText;
     Button createEventButton;
+    String selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_event);
 
+        Intent intent = getIntent();
+        selectedDate = intent.getStringExtra("date");
+
         titleEditText = findViewById(R.id.title_edit_text);
-        descriptionEditText = findViewById(R.id.description_edit_text);
         createEventButton = findViewById(R.id.create_event_button);
         createEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,5 +49,8 @@ public class AddNewEventActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        TextView selectedDateTextView = findViewById(R.id.selected_date_text_view);
+        selectedDateTextView.setText("Selected date: " + selectedDate);
     }
 }

@@ -19,10 +19,6 @@ public class Event {
         this.mTitle = title;
     }
 
-    public void setEventId(int id) {
-        eventId = id;
-    }
-
     public int getEventId() {
         return this.eventId;
     }

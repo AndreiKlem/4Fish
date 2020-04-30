@@ -19,27 +19,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/description_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:autoText="true"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Description"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_edit_text" />
+    <TextView
+        android:id="@+id/selected_date_text_view"
+        app:layout_constraintTop_toBottomOf="@id/title_edit_text"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/create_event_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="create event"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/selected_date_text_view" />
 
     <Button
         android:id="@+id/button"
@@ -47,8 +42,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="8dp"
-        android:text="time"
+        android:text="set time"
         app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
+        android:text="notification"
+        app:layout_constraintBottom_toTopOf="@+id/switch1"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Switch
@@ -61,13 +66,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="notification"
-        app:layout_constraintBottom_toTopOf="@+id/switch1"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
