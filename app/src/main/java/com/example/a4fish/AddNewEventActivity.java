@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -21,7 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddNewEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class AddNewEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
     EditText titleEditText;
@@ -62,6 +64,15 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
                 datePicker.show(getSupportFragmentManager(), "date_picker");
             }
         });
+
+        Button setTimeButton = findViewById(R.id.set_time_button);
+        setTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment timePickerFragment = new TimePickerFragment();
+                timePickerFragment.show(getSupportFragmentManager(), "time picker");
+            }
+        });
     }
 
     @Override
@@ -74,8 +85,14 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
         showSelectedDate(selectedDate);
     }
 
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        Toast.makeText(this, "Chosen time " + hourOfDay + " : " + minute, Toast.LENGTH_SHORT).show();
+    }
+
     public void showSelectedDate(String dateString) {
         TextView selectedDateTextView = findViewById(R.id.current_date_text_view);
         selectedDateTextView.setText(dateString);
     }
+
 }

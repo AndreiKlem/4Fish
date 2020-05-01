@@ -48,6 +48,7 @@
             android:id="@+id/current_date_text_view"
             android:layout_width="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical"
             android:text="01 May 2020"
             android:layout_height="wrap_content"
             android:textSize="18sp" />
