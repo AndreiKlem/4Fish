@@ -4,4 +4,7 @@
     <string name="hint_word">Event...</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Event not saved because it is empty.</string>
+    <string name="create_event_button">create event</string>
+    <string name="set_time_button">set time</string>
+    <string name="notification_button">notification</string>
 </resources>

@@ -19,40 +19,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/selected_date_text_view"
-        app:layout_constraintTop_toBottomOf="@id/title_edit_text"
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/create_event_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="create event"
+        android:text="@string/create_event_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selected_date_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/title_edit_text" />
+
+    <LinearLayout
+        android:id="@+id/date_picker_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toTopOf="@id/set_time_button"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/calendar_image_view"
+            android:layout_width="wrap_content"
+            android:src="@drawable/baseline_date_range_24"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/current_date_text_view"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="01 May 2020"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/set_time_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="8dp"
-        android:text="set time"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        android:text="@string/set_time_button"
+        app:layout_constraintBottom_toTopOf="@+id/notification_button"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/notification_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="8dp"
-        android:text="notification"
+        android:text="@string/notification_button"
         app:layout_constraintBottom_toTopOf="@+id/switch1"
         app:layout_constraintStart_toStartOf="parent" />
 
