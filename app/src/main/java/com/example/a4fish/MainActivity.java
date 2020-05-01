@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private EventViewModel mEventViewModel;
     public static final int NEW_EVENT_ACTIVITY_REQUEST_CODE = 1;
 
-    String stringDate = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(new Date());
+    DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());;
+    String stringDate = dateFormat.format(new Date());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +45,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 Calendar selectedDate = Calendar.getInstance();
                 selectedDate.set(year, month, dayOfMonth);
-                Date currentDate;
-                currentDate = selectedDate.getTime();
-                DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+                Date currentDate = selectedDate.getTime();
                 stringDate = dateFormat.format(currentDate);
             }
         });
