@@ -15,8 +15,14 @@ public class Event {
     @ColumnInfo(name = "event_title")
     public String mTitle;
 
-    public Event(@NonNull String title) {
+    @NonNull
+    @ColumnInfo(name = "event_date")
+    public String mEventDate;
+
+
+    public Event(@NonNull String title, @NonNull String eventDate) {
         this.mTitle = title;
+        this.mEventDate = eventDate;
     }
 
     public int getEventId() {
@@ -30,5 +36,7 @@ public class Event {
     public String getEventTitle() {
         return this.mTitle;
     }
+
+    public String getEventDate() { return this.mEventDate;}
 
 }

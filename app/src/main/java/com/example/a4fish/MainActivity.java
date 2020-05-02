@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.Toast;
@@ -23,8 +24,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EventListAdapter.OnEventClickListener {
 
+    private static final String TAG = "MainActivity";
     FloatingActionButton addNewEvent;
     private EventViewModel mEventViewModel;
     public static final int NEW_EVENT_ACTIVITY_REQUEST_CODE = 1;
@@ -49,9 +51,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.events_recycler_view);
-        final EventListAdapter adapter = new EventListAdapter(this);
+        final EventListAdapter adapter = new EventListAdapter(this, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //recyclerView.g
 
         mEventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
         mEventViewModel.getAllEvents().observe(this, new Observer<List<Event>>() {
@@ -78,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_EVENT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Event event = new Event(data.getStringExtra(AddNewEventActivity.EXTRA_REPLY));
+            Event event = new Event(data.getStringExtra(AddNewEventActivity.EXTRA_REPLY), data.getStringExtra("selected_date"));
             mEventViewModel.insert(event);
+            Toast.makeText(getApplicationContext(), "Recieved date: " + data.getStringExtra("selected_date"), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(
                     getApplicationContext(),
@@ -88,4 +93,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onEventClick(int position) {
+        Log.d(TAG, "onEventClick: " + position);
+    }
 }

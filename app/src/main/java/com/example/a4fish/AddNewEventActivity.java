@@ -46,6 +46,7 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
                 } else {
                     String title = titleEditText.getText().toString();
                     replyIntent.putExtra(EXTRA_REPLY, title);
+                    replyIntent.putExtra("selected_date", selectedDate);
                     setResult(RESULT_OK, replyIntent);
                 }
                 finish();
