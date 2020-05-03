@@ -34,46 +34,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toTopOf="@id/set_time_button"
         android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/time_picker_linear_layout"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/calendar_image_view"
             android:layout_width="wrap_content"
-            android:src="@drawable/baseline_date_range_24"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/baseline_date_range_24" />
 
         <TextView
             android:id="@+id/current_date_text_view"
             android:layout_width="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_gravity="center_vertical"
-            android:text="01 May 2020"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center_vertical"
+            android:text="01 May 2020"
             android:textSize="18sp" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/set_time_button"
+    <LinearLayout
+        android:id="@+id/time_picker_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/set_time_button"
-        app:layout_constraintBottom_toTopOf="@+id/notification_button"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/switch1"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/notification_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/notification_button"
-        app:layout_constraintBottom_toTopOf="@+id/switch1"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/time_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/baseline_schedule_24" />
+
+        <TextView
+            android:id="@+id/time_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center_vertical"
+            android:text="- - : - -"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <Switch
         android:id="@+id/switch1"

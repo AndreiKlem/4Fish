@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
         setContentView(R.layout.activity_main);
 
         CalendarView calendarView = findViewById(R.id.calendar_view);
+
+
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {

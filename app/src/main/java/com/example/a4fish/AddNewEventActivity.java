@@ -19,6 +19,10 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -29,6 +33,7 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
     EditText titleEditText;
     Button createEventButton;
     String selectedDate;
+    String selectedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +71,8 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
             }
         });
 
-        Button setTimeButton = findViewById(R.id.set_time_button);
-        setTimeButton.setOnClickListener(new View.OnClickListener() {
+        LinearLayout timeLinearLayout = findViewById(R.id.time_picker_linear_layout);
+        timeLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment timePickerFragment = new TimePickerFragment();
@@ -78,22 +83,27 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar c = Calendar.getInstance();
-        c.set(year, month, dayOfMonth);
-        DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
-        Date date = c.getTime();
-        selectedDate = dateFormat.format(date);
+        LocalDate date2 = LocalDate.of(year, month, dayOfMonth);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+        selectedDate = date2.format(formatter);
         showSelectedDate(selectedDate);
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Toast.makeText(this, "Chosen time " + hourOfDay + " : " + minute, Toast.LENGTH_SHORT).show();
+        LocalTime time = LocalTime.of(hourOfDay, minute);
+        selectedTime = time.toString();
+        showSelectedTime(selectedTime);
     }
 
     public void showSelectedDate(String dateString) {
         TextView selectedDateTextView = findViewById(R.id.current_date_text_view);
         selectedDateTextView.setText(dateString);
+    }
+
+    public void showSelectedTime(String timeString) {
+        TextView timeTextView = findViewById(R.id.time_text_view);
+        timeTextView.setText(timeString);
     }
 
 }
