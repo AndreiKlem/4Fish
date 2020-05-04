@@ -1,8 +1,5 @@
 package com.example.a4fish;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -10,22 +7,19 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class AddNewEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -34,6 +28,7 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
     Button createEventButton;
     String selectedDate;
     String selectedTime;
+    boolean notificationFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +47,8 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
                     String title = titleEditText.getText().toString();
                     replyIntent.putExtra(EXTRA_REPLY, title);
                     replyIntent.putExtra("selected_date", selectedDate);
+                    replyIntent.putExtra("selected_time", selectedTime);
+                    replyIntent.putExtra("notification_flag", notificationFlag);
                     setResult(RESULT_OK, replyIntent);
                 }
                 finish();
@@ -77,6 +74,21 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
             public void onClick(View v) {
                 DialogFragment timePickerFragment = new TimePickerFragment();
                 timePickerFragment.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        CheckBox notificationCheckBox = findViewById(R.id.notification_check_box);
+        notificationCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (notificationCheckBox.isChecked()) {
+                    notificationCheckBox.setButtonDrawable(R.drawable.baseline_notifications_active_black_24);
+                    notificationFlag = true;
+                }
+                else {
+                    notificationCheckBox.setButtonDrawable(R.drawable.baseline_notifications_off_black_24);
+                    notificationFlag = false;
+                }
             }
         });
     }

@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@id/switch1"
+        app:layout_constraintBottom_toTopOf="@id/notification_check_box"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
@@ -83,13 +83,13 @@
 
     </LinearLayout>
 
-    <Switch
-        android:id="@+id/switch1"
+    <CheckBox
+        android:id="@+id/notification_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="24dp"
-        android:text="Switch"
+        android:button="@drawable/baseline_notifications_off_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
