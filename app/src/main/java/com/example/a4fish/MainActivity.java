@@ -1,15 +1,5 @@
 package com.example.a4fish;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -20,8 +10,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CalendarView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -29,6 +25,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,17 +46,19 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
         createNotificationChannel();
         setContentView(R.layout.activity_main);
 
-        CalendarView calendarView = findViewById(R.id.calendar_view);
+        HashSet<Date> events = new HashSet<>();
+        events.add(new Date());
+        for (Date temp : events) {
+            Log.i(TAG, "temp: " + temp);
+            Log.i(TAG, "Done with temp");
+        }
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Calendar selectedDate = Calendar.getInstance();
-                selectedDate.set(year, month, dayOfMonth);
-                Date currentDate = selectedDate.getTime();
-                stringDate = dateFormat.format(currentDate);
-            }
-        });
+        CalendarView customCalendarView = findViewById(R.id.calendar_view);
+        customCalendarView.updateCalendar(events);
+        for (Date temp2 : events) {
+            Log.i(TAG, "temp2: " + temp2);
+            Log.i(TAG, "Done with temp2");
+        }
 
         RecyclerView recyclerView = findViewById(R.id.events_recycler_view);
         final EventListAdapter adapter = new EventListAdapter(this, this);
@@ -140,5 +139,4 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
             notificationManager.createNotificationChannel(channel);
         }
     }
-
 }

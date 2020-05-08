@@ -9,4 +9,6 @@
     <string name="notification_button">notification</string>
     <string name="channel_name">4FishChannel</string>
     <string name="channel_description">4FishChannelDescription</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

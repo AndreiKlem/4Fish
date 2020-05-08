@@ -19,7 +19,6 @@ public class Event {
     @ColumnInfo(name = "event_date")
     public String mEventDate;
 
-
     public Event(@NonNull String title, @NonNull String eventDate) {
         this.mTitle = title;
         this.mEventDate = eventDate;

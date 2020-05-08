@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CalendarDateElement">
+        <attr name="dateFormat" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="CalendarView_dateFormat">2</declare-styleable>
+    <declare-styleable name="CalendarView">1</declare-styleable>
+</resources>
