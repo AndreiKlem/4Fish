@@ -17,18 +17,20 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddNewEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
     EditText titleEditText;
     Button createEventButton;
-    String selectedDate;
-    String selectedTime;
+    Calendar selectedDate = Calendar.getInstance();
     boolean notificationFlag = false;
+    boolean showTimeFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +48,10 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
                 } else {
                     String title = titleEditText.getText().toString();
                     replyIntent.putExtra(EXTRA_REPLY, title);
-                    replyIntent.putExtra("selected_date", selectedDate);
-                    replyIntent.putExtra("selected_time", selectedTime);
+                    long passDate = selectedDate.getTimeInMillis();
+                    replyIntent.putExtra("selected_date", passDate);
                     replyIntent.putExtra("notification_flag", notificationFlag);
+                    replyIntent.putExtra("time_flag", showTimeFlag);
                     setResult(RESULT_OK, replyIntent);
                 }
                 finish();
@@ -56,8 +59,9 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
         });
 
         Intent intent = getIntent();
-        selectedDate = intent.getStringExtra("date");
-        showSelectedDate(selectedDate);
+        long dateTransfer = intent.getLongExtra("selected_date_calendar_view", -1);
+        selectedDate.setTimeInMillis(dateTransfer);
+        showSelectedDate();
 
         LinearLayout datePickerLinearLayout = findViewById(R.id.date_picker_linear_layout);
         datePickerLinearLayout.setOnClickListener(new View.OnClickListener() {
@@ -95,27 +99,30 @@ public class AddNewEventActivity extends AppCompatActivity implements DatePicker
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        LocalDate date2 = LocalDate.of(year, month, dayOfMonth);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
-        selectedDate = date2.format(formatter);
-        showSelectedDate(selectedDate);
+        selectedDate.set(Calendar.YEAR, year);
+        selectedDate.set(Calendar.MONTH, month);
+        selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        showSelectedDate();
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        LocalTime time = LocalTime.of(hourOfDay, minute);
-        selectedTime = time.toString();
-        showSelectedTime(selectedTime);
+        selectedDate.set(Calendar.HOUR, hourOfDay);
+        selectedDate.set(Calendar.MINUTE, minute);
+        showSelectedTime();
+        showTimeFlag = true;
     }
 
-    public void showSelectedDate(String dateString) {
+    public void showSelectedDate() {
         TextView selectedDateTextView = findViewById(R.id.current_date_text_view);
-        selectedDateTextView.setText(dateString);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        selectedDateTextView.setText(dateFormat.format(selectedDate.getTime()));
     }
 
-    public void showSelectedTime(String timeString) {
+    public void showSelectedTime() {
         TextView timeTextView = findViewById(R.id.time_text_view);
-        timeTextView.setText(timeString);
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH : mm");
+        timeTextView.setText(timeFormat.format(selectedDate.getTime()));
     }
 
 }

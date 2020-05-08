@@ -21,13 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements EventListAdapter.OnEventClickListener {
 
@@ -37,8 +33,9 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
     public static final int NEW_EVENT_ACTIVITY_REQUEST_CODE = 1;
     private static String CHANNEL_ID = "4Fish";
 
-    DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());;
-    String stringDate = dateFormat.format(new Date());
+    public long eventId;
+    Calendar selectedDate = Calendar.getInstance();
+    boolean showTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddNewEventActivity.class);
-                intent.putExtra("date", stringDate);
+                long dateTransfer = selectedDate.getTimeInMillis();
+                intent.putExtra("selected_date_calendar_view", dateTransfer);
                 startActivityForResult(intent, NEW_EVENT_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -90,29 +88,28 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_EVENT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            String dateFromIntent = data.getStringExtra("selected_date");
-            String timeFromIntent = data.getStringExtra("selected_time");
-            String formatPattern = dateFromIntent + timeFromIntent + "00";
+            long dateFromIntent = data.getLongExtra("selected_date", -1);
+            showTime = data.getBooleanExtra("time_flag", false);
             String tempTitle = data.getStringExtra(AddNewEventActivity.EXTRA_REPLY);
-            Event event = new Event(tempTitle, dateFromIntent);
-            mEventViewModel.insert(event);
-            if (data.getBooleanExtra("notification_flag", false)) {
-                Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyyHH:mmss");
-                try {
-                    Date date = format.parse(formatPattern);
-                    calendar.setTime(date);
-                    Log.v("onActivityResult", "calendar:   " + calendar.getTime().toString());
+            selectedDate.setTimeInMillis(dateFromIntent);
+            int eventMonth = selectedDate.get(Calendar.MONTH);
+            int eventYear = selectedDate.get(Calendar.YEAR);
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+            // Insert new event in database
+            Event event = new Event(tempTitle, dateFromIntent, eventMonth, eventYear, showTime);
+            mEventViewModel.insert(event);
+
+            // set alarm message
+            if (data.getBooleanExtra("notification_flag", false)) {
+
+                // create intent with actual parameters
                 Intent intent = new Intent(getApplicationContext(), EventBroadcast.class);
                 intent.putExtra("event_title", tempTitle);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+                // create and set message
                 AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, eventId, pendingIntent);
 
             }
         } else {

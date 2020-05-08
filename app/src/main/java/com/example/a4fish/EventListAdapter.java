@@ -24,13 +24,13 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
 
     class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView eventItemView;
-        private final TextView eventDate;
+        private final TextView eventTime;
         OnEventClickListener onEventClickListener;
 
         private EventViewHolder(View itemView, OnEventClickListener onEventClickListener) {
             super(itemView);
             eventItemView = itemView.findViewById(R.id.event_text_view);
-            eventDate = itemView.findViewById(R.id.event_date_text_view);
+            eventTime = itemView.findViewById(R.id.event_time_text_view);
             this.onEventClickListener = onEventClickListener;
             itemView.setOnClickListener(this);
         }
@@ -52,7 +52,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         if (mEvents != null) {
             Event current = mEvents.get(position);
             holder.eventItemView.setText(current.getEventTitle());
-            holder.eventDate.setText(current.getEventDate());
+            // show time if specified
+            if (current.isTimeSpecified()) {
+                holder.eventTime.setText(current.getEventTime());
+            }
         } else {
             // Covers the case of data not being ready yet.
             holder.eventItemView.setText("No Event");
