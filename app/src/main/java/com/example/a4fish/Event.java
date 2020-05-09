@@ -21,6 +21,9 @@ public class Event {
     @ColumnInfo(name = "event_date")
     long mEventDate;
 
+    @ColumnInfo(name = "event_day")
+    int mEventDay;
+
     @ColumnInfo(name = "event_month")
     int mEventMonth;
 
@@ -30,9 +33,10 @@ public class Event {
     @ColumnInfo(name = "show_time")
     boolean mTimeSpecified;
 
-    public Event(@NonNull String title, long eventDate, int eventMonth, int eventYear, boolean timeSpecified) {
+    public Event(@NonNull String title, long eventDate, int eventDay, int eventMonth, int eventYear, boolean timeSpecified) {
         this.mTitle = title;
         this.mEventDate = eventDate;
+        this.mEventDay = eventDay;
         this.mEventMonth = eventMonth;
         this.mEventYear = eventYear;
         this.mTimeSpecified = timeSpecified;

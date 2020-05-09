@@ -1,6 +1,7 @@
 package com.example.a4fish;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -18,6 +19,10 @@ class EventRepository {
 
     LiveData<List<Event>> getAllEvents() {
         return mAllEvents;
+    }
+
+    LiveData<List<Integer>> getEvents(int year, int month) {
+        return mEventDao.getEvents(year, month);
     }
 
     void insert(Event event) {

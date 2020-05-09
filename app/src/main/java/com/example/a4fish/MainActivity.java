@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
 
     public long eventId;
     Calendar selectedDate = Calendar.getInstance();
+    Calendar currentMonth = Calendar.getInstance();
+    CalendarView customCalendarView;
     boolean showTime;
 
     @Override
@@ -42,20 +45,6 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
         super.onCreate(savedInstanceState);
         createNotificationChannel();
         setContentView(R.layout.activity_main);
-
-        HashSet<Date> events = new HashSet<>();
-        events.add(new Date());
-        for (Date temp : events) {
-            Log.i(TAG, "temp: " + temp);
-            Log.i(TAG, "Done with temp");
-        }
-
-        CalendarView customCalendarView = findViewById(R.id.calendar_view);
-        customCalendarView.updateCalendar(events);
-        for (Date temp2 : events) {
-            Log.i(TAG, "temp2: " + temp2);
-            Log.i(TAG, "Done with temp2");
-        }
 
         RecyclerView recyclerView = findViewById(R.id.events_recycler_view);
         final EventListAdapter adapter = new EventListAdapter(this, this);
@@ -68,6 +57,27 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
             public void onChanged(@Nullable final List<Event> events) {
                 // Update the cached copy of the events in the adapter.
                 adapter.setEvents(events);
+            }
+        });
+
+        customCalendarView = findViewById(R.id.calendar_view);
+        updateEvents();
+
+        ImageView nextButton = findViewById(R.id.calendar_next_button);
+        ImageView prevButton = findViewById(R.id.calendar_prev_button);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMonth.add(Calendar.MONTH, 1);
+                updateEvents();
+            }
+        });
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentMonth.add(Calendar.MONTH, -1);
+                updateEvents();
             }
         });
 
@@ -84,6 +94,18 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
 
     }
 
+    private void updateEvents() {
+        mEventViewModel.getEvents(currentMonth.get(Calendar.YEAR), currentMonth.get(Calendar.MONTH)).observe(this, new Observer<List<Integer>>() {
+            @Override
+            public void onChanged(List<Integer> events) {
+                HashSet<Integer> mEvents = new HashSet<>();
+                mEvents.addAll(events);
+                Date date = currentMonth.getTime();
+                customCalendarView.updateCalendar(mEvents, date);
+            }
+        });
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -92,12 +114,14 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
             showTime = data.getBooleanExtra("time_flag", false);
             String tempTitle = data.getStringExtra(AddNewEventActivity.EXTRA_REPLY);
             selectedDate.setTimeInMillis(dateFromIntent);
+            int eventDay = selectedDate.get(Calendar.DAY_OF_MONTH);
             int eventMonth = selectedDate.get(Calendar.MONTH);
             int eventYear = selectedDate.get(Calendar.YEAR);
 
             // Insert new event in database
-            Event event = new Event(tempTitle, dateFromIntent, eventMonth, eventYear, showTime);
+            Event event = new Event(tempTitle, dateFromIntent, eventDay, eventMonth, eventYear, showTime);
             mEventViewModel.insert(event);
+            updateEvents();
 
             // set alarm message
             if (data.getBooleanExtra("notification_flag", false)) {
@@ -136,4 +160,18 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.calendar_prev_button:
+//                currentMonth.add(Calendar.MONTH, -1);
+//                updateEvents();
+//                break;
+//            case  R.id.calendar_next_button:
+//                currentMonth.add(Calendar.MONTH, 1);
+//                updateEvents();
+//                break;
+//        }
+//    }
 }

@@ -19,7 +19,13 @@ public class EventViewModel extends AndroidViewModel {
         mAllEvents = mRepository.getAllEvents();
     }
 
-    LiveData<List<Event>> getAllEvents() { return mAllEvents; }
+    LiveData<List<Event>> getAllEvents() {
+        return mAllEvents;
+    }
+
+    LiveData<List<Integer>> getEvents(int year, int month) {
+        return mRepository.getEvents(year, month);
+    }
 
     public void insert(Event event) {
         mRepository.insert(event);
