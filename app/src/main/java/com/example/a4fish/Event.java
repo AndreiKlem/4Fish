@@ -47,7 +47,7 @@ public class Event {
     }
 
     public String getEventTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH : mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(mEventDate);
         return dateFormat.format(calendar.getTime());

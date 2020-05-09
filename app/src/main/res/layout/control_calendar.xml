@@ -50,6 +50,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -59,7 +61,8 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="MON"
-            android:textColor="#222222" />
+            android:textColor="#222222"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
@@ -67,7 +70,8 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="TUE"
-            android:textColor="#222222" />
+            android:textColor="#222222"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
@@ -75,7 +79,8 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="WED"
-            android:textColor="#222222" />
+            android:textColor="#222222"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
@@ -83,7 +88,8 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="THU"
-            android:textColor="#222222" />
+            android:textColor="#222222"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
@@ -91,7 +97,8 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="FRI"
-            android:textColor="#222222" />
+            android:textColor="#222222"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
@@ -99,7 +106,8 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="SAT"
-            android:textColor="#222222" />
+            android:textColor="#222222"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
@@ -107,14 +115,19 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="SUN"
-            android:textColor="#222222" />
+            android:textColor="#222222"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <!-- days view -->
     <GridView
         android:id="@+id/calendar_grid"
-        android:layout_width="match_parent"
-        android:layout_height="340dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal"
         android:numColumns="7" />
 </LinearLayout>
