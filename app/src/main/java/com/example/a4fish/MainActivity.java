@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements EventListAdapter.
         super.onCreate(savedInstanceState);
         createNotificationChannel();
         setContentView(R.layout.activity_main);
+
+        ViewPager2 viewPager = findViewById(R.id.pager);
+
 
         RecyclerView recyclerView = findViewById(R.id.events_recycler_view);
         final EventListAdapter adapter = new EventListAdapter(this, this);
